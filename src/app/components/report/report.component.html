@@ -1,0 +1,26 @@
+<div class="card text-white mb-12" style="">
+  <div class="card-header bg-primary">Report
+    <button class="btn btn-warning btn-sm float-end">Add</button>
+  </div>
+  <div class="card-body">
+
+    <select class="form-select" aria-label="Student Roll Number" (change)="studentSelected($event)">
+      <option selected>Select student</option>
+      <option *ngFor="let s of students" value="{{s.rollNumber}}">{{s.name}}</option>
+    </select>
+
+    <table class="table" *ngIf="report">
+      <tbody>
+        <tr><td><b>Student:</b></td> <td>Roll No : {{report.student[0].rollNumber}} Name: {{report.student[0].name}}</td> </tr>
+        <tr>
+          <td><b>Subjects</b></td> <td>
+          <ng-container *ngFor="let s of report.subjects"><span  class="badge bg-secondary bg-info text-dark">{{s.name}}</span>&nbsp;</ng-container>
+          </td>
+        </tr>
+        <tr><td><b>Registrations</b></td> <td></td> </tr>
+        <tr><td><b>Exams</b></td> <td></td>  </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
