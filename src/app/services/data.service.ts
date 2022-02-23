@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+
+  public dataReload = new Subject<any>();
 
   private baseURL = "http://localhost:8767";
   private studentServiceUrl = this.baseURL+"/STUDENT-SERVICE";
@@ -16,14 +18,6 @@ export class DataService {
   private requestOptions = {headers: {'Content-Type': 'application/json'}};
 
   constructor(private httpClient: HttpClient) { }
-
-  public getExamData() : Observable<any[]>{
-    return this.httpClient.get<any[]>(this.examServiceUrl+"/data");
-  }
-
-  public getRegistrationData() : Observable<any[]>{
-    return this.httpClient.get<any[]>(this.registrationServiceUrl+"/data");
-  }
 
   public getReportData(rollNumber:string) : Observable<any>{
     return this.httpClient.get<any>(this.reportServiceUrl+"/report_cb/find_by_roll_number?roll_number="+rollNumber);
@@ -62,5 +56,39 @@ export class DataService {
   public updateSubject(subjectObject : any) : Observable<any>{
     return this.httpClient.post<any>(this.subjectServiceUrl+"/update",JSON.stringify(subjectObject),this.requestOptions);
   }
+
+  //Registration Operations
+  public getRegistrations() : Observable<any[]>{
+    return this.httpClient.get<any[]>(this.registrationServiceUrl+"/data");
+  }
+
+  public addRegistration(regObject : any) : Observable<any>{
+    return this.httpClient.post<any>(this.registrationServiceUrl+"/create",JSON.stringify(regObject),this.requestOptions);
+  }
+
+  public deleteRegistration(regObject : any) : Observable<any>{
+    return this.httpClient.post<any>(this.registrationServiceUrl+"/delete",JSON.stringify(regObject),this.requestOptions);
+  }
+
+  public updateRegistration(regObject : any) : Observable<any>{
+    return this.httpClient.post<any>(this.registrationServiceUrl+"/update",JSON.stringify(regObject),this.requestOptions);
+  }
+
+    //Exam Operations
+    public getExams() : Observable<any[]>{
+      return this.httpClient.get<any[]>(this.examServiceUrl+"/detailed_data");
+    }
+
+    public addExam(regObject : any) : Observable<any>{
+      return this.httpClient.post<any>(this.examServiceUrl+"/create",JSON.stringify(regObject),this.requestOptions);
+    }
+
+    public deleteExam(regObject : any) : Observable<any>{
+      return this.httpClient.post<any>(this.examServiceUrl+"/delete",JSON.stringify(regObject),this.requestOptions);
+    }
+
+    public updateExam(regObject : any) : Observable<any>{
+      return this.httpClient.post<any>(this.examServiceUrl+"/update",JSON.stringify(regObject),this.requestOptions);
+    }
 
 }

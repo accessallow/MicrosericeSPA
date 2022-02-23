@@ -22,6 +22,10 @@ export class SubjectComponent implements OnInit {
     });
   }
 
+  triggerReload(){
+    this.dataService.dataReload.next("SUBJECTS");
+  }
+
   loadSubjects() {
     this.dataService.getSubjects().subscribe((subjects)=>{
       this.subjects = subjects;
@@ -39,6 +43,7 @@ export class SubjectComponent implements OnInit {
           this.loadSubjects();
           this.closeModal();
           this.subjectName = '';
+          this.triggerReload();
         });
     }
   }
@@ -57,6 +62,7 @@ export class SubjectComponent implements OnInit {
     if (subjectDeleted) {
       this.dataService.deleteSubject(subjectDeleted).subscribe((r) => {
         this.loadSubjects();
+        this.triggerReload();
       });
     }
   }

@@ -18,6 +18,13 @@ export class StudentComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadStudents();
+    // this.dataService.dataReload.subscribe(()=>{
+    //   this.loadStudents();
+    // });
+  }
+
+  triggerReload(){
+    this.dataService.dataReload.next("STUDENTS");
   }
 
   loadStudents() {
@@ -37,6 +44,7 @@ export class StudentComponent implements OnInit {
           this.loadStudents();
           this.closeModal();
           this.studentName = '';
+          this.triggerReload();
         });
     }
   }
@@ -55,6 +63,7 @@ export class StudentComponent implements OnInit {
     if (studentDeleted) {
       this.dataService.deleteStudent(studentDeleted).subscribe((r) => {
         this.loadStudents();
+        this.triggerReload();
       });
     }
   }
