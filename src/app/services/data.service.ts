@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ export class DataService {
 
   public dataReload = new Subject<any>();
 
-  private baseURL = "http://localhost:8767";
+  private baseURL = "http://192.168.29.51:8767";
   private studentServiceUrl = this.baseURL+"/STUDENT-SERVICE";
   private subjectServiceUrl = this.baseURL+"/SUBJECT-SERVICE";
   private examServiceUrl = this.baseURL+"/EXAM-SERVICE";
